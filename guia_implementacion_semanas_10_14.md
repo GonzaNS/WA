@@ -14,8 +14,10 @@ Los servicios en Android son componentes que ejecutan operaciones en segundo pla
 
 **Implementación en el Reproductor:**
 
-```kotlin
-// AndroidManifest.xml - Líneas 47-53 (Declaración del servicio)
+**Figura 49:** Declaración del servicio en AndroidManifest
+
+```xml
+<!-- AndroidManifest.xml - Líneas 47-53 (Declaración del servicio) -->
 <!-- Servicio en segundo plano (ForegroundService) para reproducción de música -->
 <!-- Permite reproducir música incluso cuando la app está en segundo plano -->
 <service
@@ -23,7 +25,11 @@ Los servicios en Android son componentes que ejecutan operaciones en segundo pla
     android:enabled="true"
     android:exported="false"
     android:foregroundServiceType="mediaPlayback" />
+```
 
+**Figura 50:** Clase MusicPlayerService
+
+```kotlin
 // MusicPlayerService.kt - Líneas 19-47 (Servicio de música)
 // Servicio en segundo plano (ForegroundService) para reproducir música
 // Permite reproducir música incluso cuando la app está en segundo plano
@@ -54,7 +60,11 @@ class MusicPlayerService : Service() {
         return START_STICKY // Reiniciar servicio si se cierra
     }
 }
+```
 
+**Figura 51:** Reproducción de música en background
+
+```kotlin
 // MusicPlayerService.kt - Líneas 49-72 (Reproducir canción en background)
 // Reproducir canción
 fun playSong(song: Song, filePath: String) {
@@ -80,7 +90,11 @@ fun playSong(song: Song, filePath: String) {
         }
     }
 }
+```
 
+**Figura 52:** Creación de notificación persistente
+
+```kotlin
 // MusicPlayerService.kt - Líneas 120-156 (Notificación persistente)
 private fun createNotificationChannel() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -133,6 +147,8 @@ Los aplicativos en segundo plano permiten que la aplicación continúe ejecutand
 
 **Implementación en el Reproductor:**
 
+**Figura 53:** Controles de reproducción en background
+
 ```kotlin
 // MusicPlayerService.kt - Líneas 74-98 (Controles de reproducción en background)
 // Pausar reproducción
@@ -160,7 +176,11 @@ fun stop() {
         updateNotification()
     }
 }
+```
 
+**Figura 54:** Estado y control del servicio
+
+```kotlin
 // MusicPlayerService.kt - Líneas 100-109 (Estado y control)
 // Obtener estado actual
 fun getCurrentSong(): Song? = currentSong
@@ -172,7 +192,11 @@ fun seekTo(position: Int) {
         mediaPlayer?.seekTo(position)
     }
 }
+```
 
+**Figura 55:** Limpieza de recursos del servicio
+
+```kotlin
 // MusicPlayerService.kt - Líneas 158-162 (Limpieza de recursos)
 override fun onDestroy() {
     super.onDestroy()
@@ -192,6 +216,8 @@ override fun onDestroy() {
 Los hilos permiten ejecutar operaciones en paralelo sin bloquear el hilo principal de la UI. Android proporciona **ExecutorService** para gestionar hilos de manera eficiente. El reproductor usa hilos para operaciones de audio y GPS.
 
 **Implementación en el Reproductor:**
+
+**Figura 56:** ExecutorService para operaciones de audio
 
 ```kotlin
 // MusicPlayerService.kt - Líneas 17, 29-30 (ExecutorService para audio)
@@ -216,13 +242,21 @@ executorService.execute {
         e.printStackTrace()
     }
 }
+```
 
+**Figura 57:** ExecutorService para operaciones de GPS
+
+```kotlin
 // LocationManager.kt - Líneas 15, 25-26 (ExecutorService para GPS)
 import java.util.concurrent.Executors
 
 // ExecutorService para manejar operaciones de GPS en hilos separados
 private val executorService = Executors.newSingleThreadExecutor()
+```
 
+**Figura 58:** Obtención de ubicación en hilo separado
+
+```kotlin
 // LocationManager.kt - Líneas 46-68 (Obtener ubicación en hilo separado)
 // Obtener ubicación actual (una sola vez) usando hilos explícitos
 fun getCurrentLocation(callback: (Location?) -> Unit) {
@@ -262,6 +296,8 @@ fun getCurrentLocation(callback: (Location?) -> Unit) {
 El menú de opciones proporciona acciones secundarias y opciones de configuración. En Jetpack Compose, se utiliza **DropdownMenu** que se muestra al presionar un botón de menú (generalmente con el icono de tres puntos verticales).
 
 **Implementación en el Reproductor:**
+
+**Figura 59:** Menú de opciones en "Mi Música"
 
 ```kotlin
 // MainActivity.kt - Líneas 1024-1069 (Menú de opciones en "Mi Música")
@@ -316,7 +352,11 @@ Box {
         )
     }
 }
+```
 
+**Figura 60:** Menú lateral de navegación (NavigationDrawer)
+
+```kotlin
 // MainActivity.kt - Líneas 158-230 (Menú lateral de navegación)
 ModalNavigationDrawer(
     drawerState = drawerState,
@@ -406,17 +446,27 @@ Google proporciona servicios en la nube como Firebase para autenticación, base 
 
 **Implementación en el Reproductor:**
 
-```kotlin
-// AndroidManifest.xml - Líneas 22-23 (Permisos de internet para Firebase)
+**Figura 61:** Permisos de internet para Firebase
+
+```xml
+<!-- AndroidManifest.xml - Líneas 22-23 (Permisos de internet para Firebase) -->
 <!-- Firebase: Permisos de internet -->
 <uses-permission android:name="android.permission.INTERNET" />
+```
 
+**Figura 62:** Importaciones de Firebase
+
+```kotlin
 // MusicPlayerViewModel.kt - Líneas 33-36 (Importaciones de Firebase)
 // Importaciones para Firebase Authentication y Firestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+```
 
+**Figura 63:** Inicialización de Firebase
+
+```kotlin
 // MusicPlayerViewModel.kt - Líneas 127-129 (Inicialización de Firebase)
 // Firebase Authentication y Firestore
 private val firebaseAuth = FirebaseAuth.getInstance()
@@ -435,16 +485,9 @@ Firebase es la plataforma de desarrollo de aplicaciones de Google que proporcion
 
 **Implementación en el Reproductor:**
 
+**Figura 64:** Estados de usuario de Firebase
+
 ```kotlin
-// build.gradle.kts (app) - Dependencias de Firebase
-dependencies {
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-firestore")
-}
-
-// google-services.json - Configuración del proyecto Firebase
-// Este archivo contiene las credenciales y configuración del proyecto
-
 // MusicPlayerViewModel.kt - Líneas 132-133 (Estados de usuario)
 private val _currentUser = MutableStateFlow<FirebaseUser?>(null)
 val currentUser: StateFlow<FirebaseUser?> = _currentUser.asStateFlow()
@@ -461,6 +504,8 @@ val currentUser: StateFlow<FirebaseUser?> = _currentUser.asStateFlow()
 Firebase Authentication proporciona servicios de autenticación de usuarios con email/contraseña, Google, Facebook, etc. Permite registrar usuarios, iniciar sesión y gestionar sesiones de manera segura.
 
 **Implementación en el Reproductor:**
+
+**Figura 65:** Registro de usuario con Firebase
 
 ```kotlin
 // MusicPlayerViewModel.kt - Líneas 766-798 (Registrar usuario)
@@ -497,7 +542,11 @@ fun registerUser(email: String, password: String, displayName: String) {
         }
     }
 }
+```
 
+**Figura 66:** Inicio de sesión con Firebase
+
+```kotlin
 // MusicPlayerViewModel.kt - Líneas 800-822 (Iniciar sesión)
 // Iniciar sesión con email y contraseña en Firebase
 fun signInUser(email: String, password: String) {
@@ -522,7 +571,11 @@ fun signInUser(email: String, password: String) {
         }
     }
 }
+```
 
+**Figura 67:** Cerrar sesión de Firebase
+
+```kotlin
 // MusicPlayerViewModel.kt - Líneas 824-836 (Cerrar sesión)
 // Cerrar sesión de Firebase
 fun signOut() {
@@ -537,7 +590,11 @@ fun signOut() {
     _favoriteSongs.value = emptyList()
     _favoriteSongIds.value = emptySet()
 }
+```
 
+**Figura 68:** Pantalla de autenticación
+
+```kotlin
 // MainActivity.kt - Líneas 1717-1863 (Pantalla de autenticación)
 // Pantalla de autenticación con opciones de login y registro
 @Composable
@@ -646,6 +703,8 @@ Google Maps permite integrar mapas interactivos en aplicaciones Android. Aunque 
 
 **Implementación en el Reproductor:**
 
+**Figura 69:** Modelo de ubicación con coordenadas GPS
+
 ```kotlin
 // Location.kt - Modelo de ubicación con coordenadas GPS
 data class SavedLocation(
@@ -673,7 +732,11 @@ data class SavedLocation(
         return distanceTo(lat, lon) <= radius
     }
 }
+```
 
+**Figura 70:** Mostrar coordenadas GPS en UI
+
+```kotlin
 // MainActivity.kt - Líneas 1336-1356 (Mostrar coordenadas GPS)
 currentLocation?.let { loc ->
     Card(
@@ -710,6 +773,8 @@ Android Studio proporciona herramientas para diseñar interfaces de usuario. En 
 
 **Implementación en el Reproductor:**
 
+**Figura 71:** Composables para interfaces
+
 ```kotlin
 // Todas las pantallas están creadas con Jetpack Compose
 // Ejemplo: MainActivity.kt - Composables para cada pantalla
@@ -742,6 +807,8 @@ Cloud Storage permite almacenar y servir archivos (imágenes, videos, audio) en 
 
 **Implementación en el Reproductor:**
 
+**Figura 72:** Guardar datos de usuario en Firestore
+
 ```kotlin
 // MusicPlayerViewModel.kt - Líneas 838-856 (Guardar datos en Firestore)
 // Guardar datos de usuario en Firestore
@@ -763,7 +830,11 @@ private fun saveUserDataToFirestore(uid: String, email: String, displayName: Str
             e.printStackTrace()
         }
 }
+```
 
+**Figura 73:** Guardar canción favorita en Firestore
+
+```kotlin
 // MusicPlayerViewModel.kt - Líneas 888-930 (Guardar canción favorita en Firestore)
 // Agregar canción a favoritos y guardar en Firestore
 fun addToFavorites(song: Song) {
@@ -824,11 +895,17 @@ Firebase Realtime Database y Firestore permiten sincronización de datos en tiem
 
 **Implementación en el Reproductor:**
 
+**Figura 74:** Listener de Firestore para tiempo real
+
 ```kotlin
 // MusicPlayerViewModel.kt - Líneas 972 (Listener de Firestore)
 // Listener de Firestore para actualización en tiempo real
 private var favoritesListener: com.google.firebase.firestore.ListenerRegistration? = null
+```
 
+**Figura 75:** Cargar favoritos en tiempo real
+
+```kotlin
 // MusicPlayerViewModel.kt - Líneas 974-1023 (Cargar favoritos en tiempo real)
 // Cargar canciones favoritas desde Firestore con listener en tiempo real
 fun loadFavoriteSongs() {
@@ -880,14 +957,22 @@ fun loadFavoriteSongs() {
             _favoriteSongIds.value = favoriteIds
         }
 }
+```
 
+**Figura 76:** Limpiar listener de tiempo real
+
+```kotlin
 // MusicPlayerViewModel.kt - Líneas 1025-1029 (Limpiar listener)
 // Limpiar listener cuando se cierra sesión o se destruye el ViewModel
 private fun removeFavoritesListener() {
     favoritesListener?.remove()
     favoritesListener = null
 }
+```
 
+**Figura 77:** Listener de autenticación en tiempo real
+
+```kotlin
 // MusicPlayerViewModel.kt - Líneas 744-763 (Listener de autenticación)
 // Escuchar cambios en el estado de autenticación de Firebase
 firebaseAuth.addAuthStateListener { auth ->

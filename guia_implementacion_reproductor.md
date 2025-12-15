@@ -13,6 +13,8 @@ Una Activity representa una pantalla única con interfaz de usuario en Android. 
 
 **Implementación en el Reproductor:**
 
+**Figura 1:** Ciclo de vida de Activity en MainActivity
+
 ```kotlin
 // MainActivity.kt - Líneas 134-285
 class MainActivity : ComponentActivity() {
@@ -56,6 +58,8 @@ Las referencias en Android permiten acceder a recursos (drawables, strings, layo
 
 **Implementación en el Reproductor:**
 
+**Figura 2:** Referencias con remember para mantener estado
+
 ```kotlin
 // WelcomeScreens.kt - Líneas 28-29
 @Composable
@@ -82,6 +86,8 @@ La arquitectura de aplicaciones móviles define cómo se organizan los component
 
 **Implementación en el Reproductor:**
 
+**Figura 3:** Arquitectura MVVM del reproductor
+
 ```kotlin
 // Estructura del proyecto:
 // - Model: Song.kt, Playlist.kt, Location.kt (datos)
@@ -107,6 +113,8 @@ val showWelcomeScreens by viewModel.showWelcomeScreens.collectAsState()
 Los modelos de datos representan las entidades del negocio. En este reproductor, los modelos incluyen canciones, listas de reproducción, ubicaciones y usuarios.
 
 **Implementación en el Reproductor:**
+
+**Figura 4:** Modelos de datos del reproductor
 
 ```kotlin
 // Song.kt - Modelo de canción
@@ -152,6 +160,8 @@ data class SavedLocation(
 ConstraintLayout permite crear layouts complejos y flexibles mediante restricciones entre elementos. En Jetpack Compose, se utilizan `Box`, `Column`, `Row` y modificadores de alineación para lograr layouts similares.
 
 **Implementación en el Reproductor:**
+
+**Figura 5:** Layout de la pantalla principal con Column
 
 ```kotlin
 // MainActivity.kt - Líneas 357-659 (MusicPlayerScreen)
@@ -205,6 +215,8 @@ fun MusicPlayerScreen(
 Los controles de entrada permiten al usuario ingresar texto. En Jetpack Compose se utiliza `OutlinedTextField` para campos de texto con bordes y etiquetas.
 
 **Implementación en el Reproductor:**
+
+**Figura 6:** Campos de texto en pantalla de autenticación
 
 ```kotlin
 // MainActivity.kt - Líneas 1763-1794 (AuthScreen)
@@ -260,6 +272,8 @@ Los botones son elementos interactivos que ejecutan acciones cuando se presionan
 
 **Implementación en el Reproductor:**
 
+**Figura 7:** Botón de navegación en pantallas de bienvenida
+
 ```kotlin
 // WelcomeScreens.kt - Líneas 113-129 (Botón de navegación)
 Button(
@@ -279,7 +293,11 @@ Button(
         fontWeight = FontWeight.Bold
     )
 }
+```
 
+**Figura 8:** Botón de autenticación con indicador de carga
+
+```kotlin
 // MainActivity.kt - Líneas 1816-1842 (Botón de autenticación)
 Button(
     onClick = {
@@ -321,6 +339,8 @@ Button(
 Los checkboxes permiten seleccionar múltiples opciones. Responden a eventos de clic para cambiar su estado entre seleccionado y no seleccionado.
 
 **Implementación en el Reproductor:**
+
+**Figura 9:** Checkboxes para selección múltiple de canciones
 
 ```kotlin
 // MainActivity.kt - Líneas 1632-1660 (AddPlaylistDialog)
@@ -384,6 +404,8 @@ Los radio buttons permiten seleccionar una única opción de un grupo. Solo un r
 
 **Implementación en el Reproductor:**
 
+**Figura 10:** Radio buttons para selección de categoría
+
 ```kotlin
 // MainActivity.kt - Líneas 1558-1573 (AddLocationDialog)
 @Composable
@@ -430,8 +452,10 @@ Los Intents explícitos inician componentes específicos de la aplicación, como
 
 **Implementación en el Reproductor:**
 
-```kotlin
-// AndroidManifest.xml - Líneas 35-45
+**Figura 11:** Declaración de Activity en AndroidManifest
+
+```xml
+<!-- AndroidManifest.xml - Líneas 35-45 -->
 <activity
     android:name=".MainActivity"
     android:exported="true"
@@ -442,8 +466,12 @@ Los Intents explícitos inician componentes específicos de la aplicación, como
         <category android:name="android.intent.category.LAUNCHER" />
     </intent-filter>
 </activity>
+```
 
-// AndroidManifest.xml - Líneas 49-53 (Servicio de música)
+**Figura 12:** Declaración de servicio de música
+
+```xml
+<!-- AndroidManifest.xml - Líneas 49-53 (Servicio de música) -->
 <service
     android:name=".service.MusicPlayerService"
     android:enabled="true"
@@ -462,6 +490,8 @@ Los Intents explícitos inician componentes específicos de la aplicación, como
 ListView muestra una lista desplazable de elementos. En Jetpack Compose, se utiliza `LazyColumn` para renderizar eficientemente listas grandes, creando solo los elementos visibles.
 
 **Implementación en el Reproductor:**
+
+**Figura 13:** LazyColumn para lista de ubicaciones
 
 ```kotlin
 // MainActivity.kt - Líneas 1384-1483 (LocationsScreen)
@@ -512,7 +542,11 @@ fun LocationsScreen(
         }
     }
 }
+```
 
+**Figura 14:** LazyColumn para lista de canciones
+
+```kotlin
 // MainActivity.kt - Líneas 897-1089 (MyMusicScreen - Lista de canciones)
 LazyColumn(
     modifier = Modifier.weight(1f)
@@ -560,6 +594,8 @@ LazyColumn(
 Los eventos de clic permiten que los elementos de la UI respondan a las interacciones del usuario. En Compose, se utiliza el modificador `clickable` y callbacks como `onClick`.
 
 **Implementación en el Reproductor:**
+
+**Figura 15:** Controles de reproducción con eventos de clic
 
 ```kotlin
 // MainActivity.kt - Líneas 823-888 (PlayerControls)
@@ -615,7 +651,11 @@ fun PlayerControls(
         }
     }
 }
+```
 
+**Figura 16:** Botón de favoritos con evento de clic
+
+```kotlin
 // MainActivity.kt - Líneas 696-747 (SongInfo - Botón de favoritos)
 IconButton(
     onClick = {
@@ -644,6 +684,8 @@ IconButton(
 ## 📚 Recursos Adicionales
 
 ### Permisos Implementados
+
+**Figura 17:** Permisos declarados en AndroidManifest
 
 ```xml
 <!-- AndroidManifest.xml -->

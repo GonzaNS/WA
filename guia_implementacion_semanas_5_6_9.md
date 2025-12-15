@@ -14,6 +14,8 @@ Un Fragment representa una porción reutilizable de la interfaz de usuario dentr
 
 **Implementación en el Reproductor:**
 
+**Figura 18:** Composables como equivalente a Fragments
+
 ```kotlin
 // MainActivity.kt - Líneas 140-280
 // En lugar de Fragments tradicionales, usamos Composables que se muestran condicionalmente
@@ -71,6 +73,8 @@ El ciclo de vida de un Fragment incluye métodos como `onCreate()`, `onCreateVie
 
 **Implementación en el Reproductor:**
 
+**Figura 19:** Gestión del ciclo de vida con remember y LaunchedEffect
+
 ```kotlin
 // WelcomeScreens.kt - Líneas 23-70
 @Composable
@@ -118,7 +122,11 @@ fun WelcomeScreens(
         }
     }
 }
+```
 
+**Figura 20:** LaunchedEffect y BackHandler para ciclo de vida
+
+```kotlin
 // MainActivity.kt - Líneas 1071-1079 (LaunchedEffect - equivalente a onResume)
 LaunchedEffect(showSearch) {
     if (showSearch) focusRequester.requestFocus()
@@ -144,6 +152,8 @@ Context es una interfaz que proporciona acceso a recursos de la aplicación, ser
 
 **Implementación en el Reproductor:**
 
+**Figura 21:** Uso de Context para SharedPreferences
+
 ```kotlin
 // MainActivity.kt - Líneas 134-138
 override fun onCreate(savedInstanceState: Bundle?) {
@@ -157,7 +167,11 @@ override fun onCreate(savedInstanceState: Bundle?) {
         // ...
     }
 }
+```
 
+**Figura 22:** Context para acceder a servicios del sistema
+
+```kotlin
 // LocationManager.kt - Líneas 20-26
 class LocationManager(private val context: Context) {
     
@@ -187,7 +201,11 @@ class MusicScanner(private val context: Context) {
         }
     }
 }
+```
 
+**Figura 23:** Context para verificar permisos
+
+```kotlin
 // LocationManager.kt - Líneas 29-38 (Uso de Context para verificar permisos)
 fun hasLocationPermission(): Boolean {
     return ContextCompat.checkSelfPermission(
@@ -213,6 +231,8 @@ Toast y SnackBar son componentes para mostrar mensajes breves al usuario. Toast 
 
 **Implementación en el Reproductor:**
 
+**Figura 24:** Mensaje de error (equivalente a SnackBar)
+
 ```kotlin
 // MainActivity.kt - Líneas 1797-1811 (Mensaje de error - equivalente a SnackBar)
 // Mostrar error si existe
@@ -230,7 +250,11 @@ authError?.let { error ->
         )
     }
 }
+```
 
+**Figura 25:** Mensaje de sugerencia con acción (equivalente a SnackBar)
+
+```kotlin
 // MainActivity.kt - Líneas 1273-1303 (Mensaje de sugerencia - equivalente a SnackBar con acción)
 suggestedPlaylist?.let { playlist ->
     detectedLocation?.let { location ->
@@ -264,7 +288,11 @@ suggestedPlaylist?.let { playlist ->
         }
     }
 }
+```
 
+**Figura 26:** Mensaje de permisos (equivalente a SnackBar)
+
+```kotlin
 // MainActivity.kt - Líneas 1307-1334 (Mensaje de permisos - equivalente a SnackBar)
 if (!hasLocationPermission) {
     Card(
@@ -312,6 +340,8 @@ if (!hasLocationPermission) {
 RecyclerView es un componente avanzado para mostrar listas grandes de datos de manera eficiente, reciclando vistas que salen de la pantalla. En Jetpack Compose, **LazyColumn** y **LazyRow** proporcionan la misma funcionalidad con mejor rendimiento y sintaxis más simple.
 
 **Implementación en el Reproductor:**
+
+**Figura 27:** LazyColumn para lista de canciones en MyMusicScreen
 
 ```kotlin
 // MainActivity.kt - Líneas 897-1089 (MyMusicScreen - Lista de canciones)
@@ -429,7 +459,11 @@ fun MyMusicScreen(
         }
     }
 }
+```
 
+**Figura 28:** LazyColumn para lista de ubicaciones
+
+```kotlin
 // MainActivity.kt - Líneas 1384-1483 (LocationsScreen - Lista de ubicaciones)
 LazyColumn(
     verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -468,7 +502,11 @@ LazyColumn(
         }
     }
 }
+```
 
+**Figura 29:** LazyColumn con checkboxes para selección múltiple
+
+```kotlin
 // MainActivity.kt - Líneas 1625-1662 (AddPlaylistDialog - Lista de canciones con checkboxes)
 LazyColumn(
     modifier = Modifier.weight(1f)
@@ -524,6 +562,8 @@ Material Design es el sistema de diseño de Google que proporciona principios, c
 
 **Implementación en el Reproductor:**
 
+**Figura 30:** Principios de Material Design aplicados
+
 ```kotlin
 // MainActivity.kt - Principios de Material Design aplicados
 
@@ -564,7 +604,11 @@ Modifier.padding(16.dp)
 
 // 7. Feedback visual (Ripple effect en clickable)
 Modifier.clickable { /* acción */ }
+```
 
+**Figura 31:** Switches Material en SettingsScreen
+
+```kotlin
 // MainActivity.kt - Líneas 1194-1233 (SettingsScreen - Switches Material)
 Row(
     modifier = Modifier.fillMaxWidth(),
@@ -592,10 +636,10 @@ CardView es un contenedor con bordes redondeados y sombra que sigue los principi
 
 **Implementación en el Reproductor:**
 
-```kotlin
-// MainActivity.kt - Múltiples usos de Card
+**Figura 32:** Card para items de lista
 
-// 1. Card para items de lista (Mi Música)
+```kotlin
+// MainActivity.kt - Card para items de lista (Mi Música)
 Card(
     modifier = Modifier
         .fillMaxWidth()
@@ -616,8 +660,12 @@ Card(
         // Contenido de la canción
     }
 }
+```
 
-// 2. Card para mensajes (Ubicaciones detectadas)
+**Figura 33:** Card para mensajes y notificaciones
+
+```kotlin
+// Card para mensajes (Ubicaciones detectadas)
 Card(
     modifier = Modifier.fillMaxWidth(),
     colors = CardDefaults.cardColors(containerColor = Color(0xFFE3F2FD))
@@ -636,8 +684,12 @@ Card(
         }
     }
 }
+```
 
-// 3. Card para información (Configuración)
+**Figura 34:** Card para información y configuración
+
+```kotlin
+// Card para información (Configuración)
 Card(
     modifier = Modifier.fillMaxWidth(),
     colors = CardDefaults.cardColors(containerColor = Color(0xFFF7F7F7))
@@ -657,8 +709,12 @@ Card(
         )
     }
 }
+```
 
-// 4. Card para errores (Autenticación)
+**Figura 35:** Card para errores
+
+```kotlin
+// Card para errores (Autenticación)
 Card(
     modifier = Modifier.fillMaxWidth(),
     colors = CardDefaults.cardColors(containerColor = Color(0xFFFFEBEE))
@@ -670,8 +726,12 @@ Card(
         fontSize = 14.sp
     )
 }
+```
 
-// 5. Card para perfil de usuario (Mi Nube)
+**Figura 36:** Card para perfil de usuario
+
+```kotlin
+// Card para perfil de usuario (Mi Nube)
 Card(
     modifier = Modifier.fillMaxWidth(),
     colors = CardDefaults.cardColors(containerColor = Color(0xFFF7F7F7))
@@ -722,8 +782,10 @@ El hardware del dispositivo incluye componentes físicos como GPS, acelerómetro
 
 **Implementación en el Reproductor:**
 
-```kotlin
-// AndroidManifest.xml - Declaración de hardware
+**Figura 37:** Declaración de hardware en AndroidManifest
+
+```xml
+<!-- AndroidManifest.xml - Declaración de hardware -->
 <!-- Permisos para GPS y ubicación -->
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -732,7 +794,11 @@ El hardware del dispositivo incluye componentes físicos como GPS, acelerómetro
 <!-- Permisos para sensores (hardware) - Acelerómetro y giroscopio -->
 <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
 <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false" />
+```
 
+**Figura 38:** Verificación de disponibilidad de hardware
+
+```kotlin
 // SensorManager.kt - Líneas 20-28 (Verificar disponibilidad de hardware)
 // Verificar si el dispositivo tiene acelerómetro
 fun hasAccelerometer(): Boolean {
@@ -757,18 +823,20 @@ Android proporciona MediaPlayer y ExoPlayer para reproducir audio. El reproducto
 
 **Implementación en el Reproductor:**
 
-```kotlin
-// AndroidManifest.xml - Servicio de reproducción
+**Figura 39:** Servicio de reproducción de música
+
+```xml
+<!-- AndroidManifest.xml - Servicio de reproducción -->
 <service
     android:name=".service.MusicPlayerService"
     android:enabled="true"
     android:exported="false"
     android:foregroundServiceType="mediaPlayback" />
+```
 
-// MusicPlayerService.kt - Servicio para reproducción de música
-// Este servicio maneja la reproducción de audio en segundo plano
-// usando MediaPlayer o ExoPlayer
+**Figura 40:** Controles de reproducción
 
+```kotlin
 // MainActivity.kt - Líneas 823-888 (Controles de reproducción)
 @Composable
 fun PlayerControls(
@@ -833,6 +901,8 @@ El GPS (Global Positioning System) permite obtener la ubicación geográfica del
 
 **Implementación en el Reproductor:**
 
+**Figura 41:** Gestión de permisos y estado de GPS
+
 ```kotlin
 // LocationManager.kt - Líneas 17-68 (Gestión de GPS)
 class LocationManager(private val context: Context) {
@@ -885,7 +955,11 @@ class LocationManager(private val context: Context) {
         }
     }
 }
+```
 
+**Figura 42:** Actualizaciones de ubicación en tiempo real
+
+```kotlin
 // LocationManager.kt - Líneas 70-119 (Actualizaciones en tiempo real)
 // Obtener actualizaciones de ubicación en tiempo real usando Flow
 fun getLocationUpdates(): Flow<Location?> = callbackFlow {
@@ -936,7 +1010,11 @@ fun getLocationUpdates(): Flow<Location?> = callbackFlow {
         }
     }
 }
+```
 
+**Figura 43:** Detección de ubicaciones guardadas
+
+```kotlin
 // LocationManager.kt - Líneas 126-136 (Encontrar ubicación más cercana)
 // Encontrar ubicación guardada más cercana a la ubicación actual
 fun findNearestSavedLocation(
@@ -948,7 +1026,11 @@ fun findNearestSavedLocation(
         .filter { it.contains(currentLat, currentLon) }
         .minByOrNull { it.distanceTo(currentLat, currentLon) }
 }
+```
 
+**Figura 44:** Solicitud de permisos de GPS
+
+```kotlin
 // MainActivity.kt - Líneas 123-132 (Solicitar permisos de GPS)
 private val requestLocationPermissionLauncher = registerForActivityResult(
     ActivityResultContracts.RequestMultiplePermissions()
@@ -959,7 +1041,11 @@ private val requestLocationPermissionLauncher = registerForActivityResult(
         viewModel.getCurrentLocation()
     }
 }
+```
 
+**Figura 45:** Mostrar ubicación actual en UI
+
+```kotlin
 // MainActivity.kt - Líneas 1336-1356 (Mostrar ubicación actual)
 currentLocation?.let { loc ->
     Card(
@@ -997,6 +1083,8 @@ Los sensores de hardware como el acelerómetro y giroscopio detectan movimiento 
 
 **Implementación en el Reproductor:**
 
+**Figura 46:** Lectura de datos del acelerómetro
+
 ```kotlin
 // SensorManager.kt - Líneas 30-59 (Acelerómetro)
 // Obtener datos del acelerómetro
@@ -1029,7 +1117,11 @@ fun getAccelerometerData(): Flow<FloatArray?> = callbackFlow {
         sensorManager.unregisterListener(listener)
     }
 }
+```
 
+**Figura 47:** Lectura de datos del giroscopio
+
+```kotlin
 // SensorManager.kt - Líneas 61-90 (Giroscopio)
 // Obtener datos del giroscopio
 fun getGyroscopeData(): Flow<FloatArray?> = callbackFlow {
@@ -1061,7 +1153,11 @@ fun getGyroscopeData(): Flow<FloatArray?> = callbackFlow {
         sensorManager.unregisterListener(listener)
     }
 }
+```
 
+**Figura 48:** Detección de movimiento del dispositivo
+
+```kotlin
 // SensorManager.kt - Líneas 92-131 (Detectar movimiento)
 // Detectar si el dispositivo está en movimiento basado en el acelerómetro
 fun isDeviceMoving(threshold: Float = 0.5f): Flow<Boolean> = callbackFlow {
